@@ -3,12 +3,12 @@ if !exists("g:stylish_haskell_command")
 endif
 
 function! s:OverwriteBuffer(output)
-  let cursor_position = getpos('.')
+  let winview = winsaveview()
   silent! undojoin
   normal! ggdG
   call append(0, split(a:output, '\v\n'))
   normal! Gdd
-  call setpos('.', cursor_position)
+  call winrestview(winview)
 endfunction
 
 function! s:StylishHaskell()
