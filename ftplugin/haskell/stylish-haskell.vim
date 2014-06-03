@@ -14,7 +14,9 @@ endfunction
 function! s:StylishHaskell()
   let output = system(g:stylish_haskell_command . " " . bufname("%"))
   let errors = matchstr(output, '\(Language\.Haskell\.Stylish\.Parse\.parseModule:[^\x0]*\)')
-  if empty(errors)
+  if v:shell_error != 0
+    echom output
+  elseif empty(errors)
     call s:OverwriteBuffer(output)
     write
   else
