@@ -5,9 +5,9 @@ endif
 function! s:OverwriteBuffer(output)
   let winview = winsaveview()
   silent! undojoin
-  normal! ggdG
+  normal! gg"_dG
   call append(0, split(a:output, '\v\n'))
-  normal! Gdd
+  normal! G"_dd
   call winrestview(winview)
 endfunction
 
