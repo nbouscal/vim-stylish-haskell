@@ -10,6 +10,9 @@ time they are saved. It assumes stylish-haskell is accessible from your $PATH.
 If this isn't the case, set the `g:stylish_haskell_command` variable to the
 location of the stylish-haskell binary.
 
+In case `stylish-haskell` is not present in PATH all the time, annoying error
+messages could be suppressed via `g:stylish_haskell_disable_if_not_in_path = 1`.
+
 [stylish-haskell]: https://github.com/jaspervdj/stylish-haskell
 
 Installation

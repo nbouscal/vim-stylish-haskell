@@ -2,6 +2,10 @@ if !exists("g:stylish_haskell_command")
   let g:stylish_haskell_command = "stylish-haskell"
 endif
 
+if !exists("g:stylish_haskell_disable_if_not_in_path")
+  let g:stylish_haskell_disable_if_not_in_path = 0
+endif
+
 function! s:OverwriteBuffer(output)
   let winview = winsaveview()
   silent! undojoin
@@ -26,5 +30,7 @@ endfunction
 
 augroup stylish-haskell
   autocmd!
-  autocmd BufWritePost *.hs call s:StylishHaskell()
+  if ((executable(g:stylish_haskell_command)) || (!g:stylish_haskell_disable_if_not_in_path))
+    autocmd BufWritePost *.hs call s:StylishHaskell()
+  endif
 augroup END
