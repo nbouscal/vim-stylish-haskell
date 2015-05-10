@@ -12,6 +12,15 @@ function! s:OverwriteBuffer(output)
 endfunction
 
 function! s:StylishHaskell()
+  if executable(g:stylish_haskell_command)
+    call s:RunStylishHaskell()
+  elseif !exists("s:exec_warned")
+    let s:exec_warned = 1
+    echom "stylish-haskell executable not found"
+  endif
+endfunction
+
+function! s:RunStylishHaskell()
   let output = system(g:stylish_haskell_command . " " . bufname("%"))
   let errors = matchstr(output, '\(Language\.Haskell\.Stylish\.Parse\.parseModule:[^\x0]*\)')
   if v:shell_error != 0
