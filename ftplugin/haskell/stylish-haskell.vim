@@ -21,7 +21,8 @@ function! s:StylishHaskell()
 endfunction
 
 function! s:RunStylishHaskell()
-  let output = system(g:stylish_haskell_command . " " . bufname("%"))
+  let command = "(cd " . expand("%:h") . "; " . g:stylish_haskell_command . " " . expand("%:p") . ")"
+  let output = system(command)
   let errors = matchstr(output, '\(Language\.Haskell\.Stylish\.Parse\.parseModule:[^\x0]*\)')
   if v:shell_error != 0
     echom output
