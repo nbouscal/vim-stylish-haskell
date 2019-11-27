@@ -1,6 +1,11 @@
 if !exists("g:stylish_haskell_command")
-  let g:stylish_haskell_command = "stylish-haskell"
+  if executable("stylish-haskell")
+    let g:stylish_haskell_command = "stylish-haskell"
+  else
+    echom "stylish-haskell not found in $PATH"
+  endif
 endif
+
 if !exists("g:stylish_haskell_options")
   let g:stylish_haskell_options = [ ]
 endif
@@ -15,7 +20,7 @@ function! s:OverwriteBuffer(output)
 endfunction
 
 function! s:StylishHaskell()
-  if executable(g:stylish_haskell_command)
+  if executable(split(g:stylish_haskell_command)[0])
     call s:RunStylishHaskell()
   elseif !exists("s:exec_warned")
     let s:exec_warned = 1
