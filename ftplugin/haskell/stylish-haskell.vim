@@ -13,9 +13,22 @@ endif
 function! s:OverwriteBuffer(output)
   let winview = winsaveview()
   silent! undojoin
-  normal! gg"_dG
-  call append(0, split(a:output, '\v\n'))
-  normal! G"_dd
+
+  let splitted = split(a:output, '\n')
+
+  " From https://github.com/fatih/vim-go/blob/99a1732e40e3f064300d544eebd4153dbc3c60c7/autoload/go/fmt.vim
+  "
+  " delete any leftover before we replace the whole file. Suppose the
+  " file had 20 lines, but new output has 10 lines, only 1-10 are
+  " replaced with setline, remaining lines 11-20 won't get touched. So
+  " remove them.
+  if line('$') > len(splitted)
+      execute len(splitted) .',$delete'
+  endif
+
+  " setline iterates over the list and replaces each line
+  call setline(1, splitted)
+
   call winrestview(winview)
 endfunction
 
