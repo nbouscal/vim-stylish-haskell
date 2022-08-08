@@ -32,7 +32,7 @@ function! s:RunStylishHaskell()
   let output = system(g:stylish_haskell_command . " " . join(g:stylish_haskell_options, ' ') . " " . bufname("%"))
   let errors = matchstr(output, '\(Language\.Haskell\.Stylish\.Parse\.parseModule:[^\x0]*\)')
   if v:shell_error != 0
-    echom output
+    echom substitute(output, '\n$', '', '')
   elseif empty(errors)
     call s:OverwriteBuffer(output)
     write
